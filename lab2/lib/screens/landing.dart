@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:lab2/domain/user.dart';
 import 'package:lab2/screens/log_in.dart';
 import 'package:lab2/screens/home.dart';
 import 'package:provider/provider.dart';
+import 'package:lab2/services/geolocation.dart';
+import 'package:lab2/services/places_services.dart';
+import 'package:lab2/models/place.dart';
 
 class LandingPage extends StatelessWidget {
   LandingPage({Key key}) : super(key: key);
+
+  final locatorService = GeoLocatorService();
+  final placesService = PlacesService();
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +20,14 @@ class LandingPage extends StatelessWidget {
     final bool isLoggedIn = user != null;
 
     return isLoggedIn
-      ?  HomePage()
+      ? MultiProvider(providers: [
+        FutureProvider(create: (context) => locatorService.getLocation()),
+        ProxyProvider<Position,Future<List<Place>>>( 
+          update: (context,position,places){
+            return (position !=null) ? placesService.getPlaces(position.latitude, position.longitude) :null;
+          },
+        )
+      ],child: MaterialApp(home: HomePage(),),)
       : logIn();
   }
 }
