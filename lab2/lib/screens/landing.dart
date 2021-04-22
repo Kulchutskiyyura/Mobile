@@ -27,7 +27,7 @@ class LandingPage extends StatelessWidget {
             return (position !=null) ? placesService.getPlaces(position.latitude, position.longitude) :null;
           },
         )
-      ],child: MaterialApp(home: HomePage(),),)
+      ],child: MaterialApp(routes: <String, WidgetBuilder>{'/comment': (context) => CommentView(),'/detail': (context) => DetailView(),'/map': (context) => MapView()} ,home: HomePage(),),)
       : logIn();
   }
 }

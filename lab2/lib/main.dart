@@ -3,13 +3,16 @@ import 'package:geolocator/geolocator.dart';
 import 'package:lab2/domain/user.dart';
 
 import 'package:lab2/screens/landing.dart';
+import 'package:lab2/screens/home.dart';
 import 'package:lab2/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:lab2/services/geolocation.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  runApp(new MaterialApp(
+    home: new MyApp(), 
+   
+));
 }
 
 class MyApp extends StatelessWidget {
@@ -22,6 +25,8 @@ class MyApp extends StatelessWidget {
       
       value: AuthService().currentUser,
       child: MaterialApp(
+          routes: <String, WidgetBuilder>{'/detail': (BuildContext context) => DetailView()},
+                                                          
           debugShowCheckedModeBanner: false,
           title: 'Max Fitness',
           theme: ThemeData(

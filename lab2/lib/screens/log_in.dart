@@ -170,7 +170,7 @@ class _logInState extends State<logIn>
       body: Column(
         children: <Widget>[
           _logo(),      
-          SizedBox(height: 100,),    
+          SizedBox(height: 50,),    
           (
             showLogin
             ? Column(
